@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forge Analytics</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="cosmic-bg"></div>
+  <div class="floating-orbs">
+   <div class="orb"></div>
+   <div class="orb"></div>
+   <div class="orb"></div>
+  </div>
+  <div class="dashboard-container">
+   <header class="header">
+    <div class="header-content">
+     <div class="logo-section">
+      <div class="logo-icon">
+       F
+      </div>
+      <div class="logo-text" id="dashboard-title">
+       Forge Analytics
+      </div>
+     </div>
+     <div class="header-controls"><button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+     </div>
+    </div>
+   </header>
+   <main class="main-content">
+    <div class="hero-section">
+     <h1 class="hero-title" id="company-name">Your Company</h1>
+     <p class="hero-subtitle" id="welcome-message">Welcome to your advanced analytics workspace</p>
+     <p class="hero-tagline" id="tagline">Data-driven insights for tomorrow</p>
+    </div>
+    <div id="success-message" style="display: none;"></div>
+    <div id="warning-message" style="display: none;"></div>
+    <div class="section">
+     <div class="section-header">
+      <div class="section-icon">
+       🚀
+      </div>
+      <h2 class="section-title">Create Analytics Project</h2>
+     </div>
+     <div class="create-project-section">
+      <form id="project-form" class="form-container">
+       <div class="form-section">
+        <h3 class="form-section-title">
+         <div class="form-section-icon">
+          📊
+         </div> Project Details</h3>
+        <div class="form-grid">
+         <div class="form-group"><label class="form-label" for="project-name">Project Name</label> <input type="text" id="project-name" class="form-input" placeholder="E.g., Q4 Sales Performance Analysis" required>
+         </div>
+         <div class="form-group"><label class="form-label" for="analytics-type">Analytics Type</label> <select id="analytics-type" class="form-select" required> <option value="">Select analytics type...</option> <option value="sales">Sales Analytics</option> <option value="marketing">Marketing Performance</option> <option value="user-behavior">User Behavior Analysis</option> <option value="financial">Financial Analysis</option> <option value="operational">Operational Metrics</option> <option value="customer">Customer Analytics</option> <option value="product">Product Performance</option> <option value="social-media">Social Media Analytics</option> </select>
+         </div>
+         <div class="form-group"><label class="form-label" for="data-source">Data Source</label> <select id="data-source" class="form-select" required> <option value="">Select data source...</option> <option value="google-analytics">Google Analytics</option> <option value="salesforce">Salesforce CRM</option> <option value="hubspot">HubSpot</option> <option value="shopify">Shopify</option> <option value="facebook-ads">Facebook Ads Manager</option> <option value="google-ads">Google Ads</option> <option value="csv-upload">CSV File Upload</option> <option value="database">Database Connection</option> <option value="api">Custom API Integration</option> </select>
+         </div>
+         <div class="form-group"><label class="form-label" for="time-range">Analysis Time Range</label> <select id="time-range" class="form-select" required> <option value="">Select time range...</option> <option value="last-7-days">Last 7 Days</option> <option value="last-30-days">Last 30 Days</option> <option value="last-3-months">Last 3 Months</option> <option value="last-6-months">Last 6 Months</option> <option value="last-year">Last Year</option> <option value="custom">Custom Date Range</option> </select>
+         </div>
+        </div>
+       </div>
+       <div class="form-section">
+        <h3 class="form-section-title">
+         <div class="form-section-icon">
+          🎯
+         </div> Key Performance Indicators</h3>
+        <div class="form-grid">
+         <div class="form-group number-input-group"><label class="form-label" for="target-revenue">Target Revenue</label> <input type="number" id="target-revenue" class="form-input number-input" placeholder="100000" min="0" step="1000"> <span class="input-suffix">USD</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="current-revenue">Current Revenue</label> <input type="number" id="current-revenue" class="form-input number-input" placeholder="75000" min="0" step="1000"> <span class="input-suffix">USD</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="target-users">Target Users</label> <input type="number" id="target-users" class="form-input number-input" placeholder="10000" min="0" step="100"> <span class="input-suffix">Users</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="current-users">Current Users</label> <input type="number" id="current-users" class="form-input number-input" placeholder="8500" min="0" step="100"> <span class="input-suffix">Users</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="target-conversion">Target Conversion Rate</label> <input type="number" id="target-conversion" class="form-input number-input" placeholder="5.5" min="0" max="100" step="0.1"> <span class="input-suffix">%</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="current-conversion">Current Conversion Rate</label> <input type="number" id="current-conversion" class="form-input number-input" placeholder="4.2" min="0" max="100" step="0.1"> <span class="input-suffix">%</span>
+         </div>
+        </div>
+       </div>
+       <div class="form-section">
+        <h3 class="form-section-title">
+         <div class="form-section-icon">
+          ⚙️
+         </div> Project Configuration</h3>
+        <div class="form-grid">
+         <div class="form-group number-input-group"><label class="form-label" for="budget">Project Budget</label> <input type="number" id="budget" class="form-input number-input" placeholder="50000" min="0" step="1000"> <span class="input-suffix">USD</span>
+         </div>
+         <div class="form-group number-input-group"><label class="form-label" for="team-size">Team Size</label> <input type="number" id="team-size" class="form-input number-input" placeholder="5" min="1" max="100"> <span class="input-suffix">People</span>
+         </div>
+        </div>
+        <div class="form-group"><label class="form-label" for="metrics">Additional Metrics &amp; Goals</label> <textarea id="metrics" class="form-textarea" placeholder="Describe specific metrics you want to track, KPIs to monitor, and business goals for this analytics project..." required></textarea>
+        </div>
+       </div><button type="submit" class="btn btn-primary create-btn" id="create-btn"> <span id="btn-text">Launch Analytics Project</span> </button>
+      </form>
+     </div>
+    </div>
+    <div class="section">
+     <div class="section-header">
+      <div class="section-icon">
+       📈
+      </div>
+      <h2 class="section-title">Active Projects</h2>
+     </div>
+     <div class="projects-section">
+      <div id="projects-container">
+       <div class="projects-grid" id="projects-grid"></div>
+      </div>
+     </div>
+    </div>
+   </main>
+   <footer class="footer">
+    <div class="footer-content">
+     <div class="footer-grid">
+      <div class="footer-section">
+       <div class="footer-logo">
+        <div class="footer-logo-icon">
+         F
+        </div>
+        <div class="footer-logo-text">
+         Forge Analytics
+        </div>
+       </div>
+       <p class="footer-description">Advanced analytics platform for data-driven insights and comprehensive business intelligence.</p>
+       <div class="footer-social"><a href="#" class="social-link">📧</a> <a href="#" class="social-link">🐦</a> <a href="#" class="social-link">💼</a> <a href="#" class="social-link">📱</a>
+       </div>
+      </div>
+      <div class="footer-section">
+       <h4 class="footer-title">Platform</h4>
+       <ul class="footer-links">
+        <li><a href="#" class="footer-link">Dashboard</a></li>
+        <li><a href="#" class="footer-link">Analytics</a></li>
+        <li><a href="#" class="footer-link">Reports</a></li>
+        <li><a href="#" class="footer-link">Integrations</a></li>
+        <li><a href="#" class="footer-link">API Access</a></li>
+       </ul>
+      </div>
+      <div class="footer-section">
+       <h4 class="footer-title">Resources</h4>
+       <ul class="footer-links">
+        <li><a href="#" class="footer-link">Documentation</a></li>
+        <li><a href="#" class="footer-link">Tutorials</a></li>
+        <li><a href="#" class="footer-link">Best Practices</a></li>
+        <li><a href="#" class="footer-link">Case Studies</a></li>
+        <li><a href="#" class="footer-link">Community</a></li>
+       </ul>
+      </div>
+      <div class="footer-section">
+       <h4 class="footer-title">Support</h4>
+       <ul class="footer-links">
+        <li><a href="#" class="footer-link">Help Center</a></li>
+        <li><a href="#" class="footer-link">Contact Us</a></li>
+        <li><a href="#" class="footer-link">System Status</a></li>
+        <li><a href="#" class="footer-link">Feature Requests</a></li>
+        <li><a href="#" class="footer-link">Bug Reports</a></li>
+       </ul>
+      </div>
+      <div class="footer-section">
+       <h4 class="footer-title">Company</h4>
+       <ul class="footer-links">
+        <li><a href="#" class="footer-link">About Us</a></li>
+        <li><a href="#" class="footer-link">Careers</a></li>
+        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+        <li><a href="#" class="footer-link">Terms of Service</a></li>
+        <li><a href="#" class="footer-link">Security</a></li>
+       </ul>
+      </div>
+     </div>
+     <div class="footer-bottom">
+      <div class="footer-copyright">
+       <p>© 2025 Forge Analytics. All rights reserved.</p>
+       <p class="footer-made-by">Made with ⚡ by <span class="glitch-forge">GlitchForge</span></p>
+      </div>
+      <div class="footer-legal"><a href="#" class="legal-link">Privacy</a> <a href="#" class="legal-link">Terms</a> <a href="#" class="legal-link">Cookies</a> <a href="#" class="legal-link">Security</a>
+      </div>
+     </div>
+    </div>
+   </footer>
+  </div><!-- Full-Screen Analytics View -->
+  <div class="analytics-overlay" id="analytics-overlay">
+   <div class="analytics-container">
+    <div class="analytics-header">
+     <h2 class="analytics-title" id="analytics-project-name">Project Analytics</h2><button class="close-analytics" id="close-analytics">×</button>
+    </div>
+    <div class="kpi-grid" id="kpi-grid"></div>
+    <div class="analytics-dashboard">
+     <div class="analytics-card card-large">
+      <h3 class="card-title">
+       <div class="card-icon">
+        📊
+       </div> Performance Overview</h3>
+      <div class="chart-container chart-large">
+       <canvas id="performance-chart"></canvas>
+      </div>
+     </div>
+     <div class="analytics-card card-small">
+      <h3 class="card-title">
+       <div class="card-icon">
+        📈
+       </div> Growth Trend</h3>
+      <div class="chart-container">
+       <canvas id="growth-chart"></canvas>
+      </div>
+     </div>
+     <div class="analytics-card card-medium">
+      <h3 class="card-title">
+       <div class="card-icon">
+        🎯
+       </div> Goal Progress</h3>
+      <div class="chart-container">
+       <canvas id="goals-chart"></canvas>
+      </div>
+     </div>
+     <div class="analytics-card card-medium">
+      <h3 class="card-title">
+       <div class="card-icon">
+        📋
+       </div> Metrics Breakdown</h3>
+      <div class="chart-container">
+       <canvas id="metrics-chart"></canvas>
+      </div>
+     </div>
+     <div class="analytics-card card-full">
+      <h3 class="card-title">
+       <div class="card-icon">
+        ⏱️
+       </div> Time Series Analysis</h3>
+      <div class="chart-container">
+       <canvas id="timeseries-chart"></canvas>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+   <script src="script.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98f69be3d77725b1',t:'MTc2MDYwNzc3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
